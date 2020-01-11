@@ -13,7 +13,6 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import com.restman.core.auth.AuthLogin;
 
 
 
@@ -56,7 +55,7 @@ public class App
 		ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/*");
 		jerseyServlet.setInitOrder(0);
 
-		jerseyServlet.setInitParameter("jersey.config.server.provider.classnames",RestmanTestCaseManager.class.getCanonicalName()+" "+ RestPy.class.getCanonicalName()+" "+CorsFilter.class.getCanonicalName()+" "+AuthLogin.class.getCanonicalName());
+		jerseyServlet.setInitParameter("jersey.config.server.provider.classnames",RestmanTestCaseManager.class.getCanonicalName()+" "+ RestPy.class.getCanonicalName()+" "+CorsFilter.class.getCanonicalName()+" ");
 
 		FilterHolder holder = new FilterHolder(new CorsFilter());
 		

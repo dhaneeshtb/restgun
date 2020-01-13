@@ -67,13 +67,13 @@ function checkLogin() {
 }
 
 function addHost() {
-	var command = server + "/herest/" + projectName + "/hosts/"
+	var command = server + "/herest/" + projectName + "/variables/"
 			+ $("#nameInput").val() + "?userName=" + userName;
 
 	var host = {
 		name : $("#nameInput").val(),
 
-		host : $("#hostInput").val()
+		value : $("#hostInput").val()
 	}
 
 	execCommand(command, "POST", JSON.stringify(host), function(out, status) {
@@ -114,7 +114,7 @@ function addProject() {
 function renderHosts() {
 	$("#hostTable tbody").empty();
 
-	var command = server + "/herest/" + projectName + "/hosts?userName="
+	var command = server + "/herest/" + projectName + "/variables?userName="
 			+ userName;
 
 	$.getJSON(command, function(data) {
@@ -129,10 +129,20 @@ function renderHosts() {
 			targetHosts.push(o);
 
 			$("#hostTable tbody").append(
-					"<tr><td>" + o.name + "</td><td>" + o.host + "</td></tr>");
+					"<tr><td>" + o.name + "</td><td>" + o.value + "</td> <td onclick=\"deleteVariable('"+o.name+"')\"><i  id=\"removeHeader\" class=\"btn-floating waves-effect waves-light material-icons center\">delete</i></td></tr>");
 
 		}
 		populateServers();
+	});
+}
+
+function deleteVariable(name){
+    var command = server + "/herest/" + projectName + "/variables/"+name+"?userName="
+			+ userName;
+	execCommand(command, "delete", "{}", function(){
+	    setTimeout(function() {
+        				renderHosts();
+        			}, 2000);
 	});
 }
 
@@ -476,14 +486,14 @@ $("#addHeader").click(function() {
 		$("#headerName").val("");$("#headerValue").val("");
 	}else
 		alert("HeaderName or HeaderValue is empty");
-		
+
 });
 function addHeaders(){
-	
-	
+
+
 }
 function addHeader(key,val){
-	
+
 	$("#headers tbody")
 			.append(
 					"<tr>"
@@ -493,7 +503,7 @@ function addHeader(key,val){
 							+ "</td>"
 							+ " <td onclick=\"$(this).parent().remove();\"><i  id=\"removeHeader\" class=\"btn-floating waves-effect waves-light material-icons center\">delete</i></td></tr>");
 
-	
+
 }
 
 
@@ -561,6 +571,18 @@ function sendData(callBack) {
 			});
 }
 function send(url, method, data, callBack) {
+
+    var dataS = JSON.stringify(data);
+    var urlS =url;
+    for(var k in targetHosts){
+        var h = targetHosts[k];
+        var key = "/{{"+h.name+"}}/g"
+        dataS = dataS.replace(key,h.value);
+        urlS = urlS.replace(key,h.value);
+
+    }
+    url=urlS;
+    data = JSON.parse(dataS);
 	$
 			.ajax({
 				url : url,
@@ -697,7 +719,7 @@ function getTestCaseJson() {
 		objAssert.value = htmlDecode($(tr).find('td:nth-child(2)').html());
 		headers.push(objAssert);
 	});
-	
+
 	var tags = $('#tags').material_chip('data');
 	var mt = new Array();
 	for (var i = 0; i < tags.length; i++) {
@@ -883,7 +905,7 @@ function initProjectTree() {
 	});
 
 	var url = server+"/herest/" + projectName
-			+ "/testCase/_search?size=5000";
+			+ "/testCase?size=5000";
 
 	$.getJSON(url, function(data) {
 		var recs = data.hits ? data.hits.hits : new Array();

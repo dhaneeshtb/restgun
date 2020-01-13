@@ -12,13 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -58,16 +52,38 @@ public class RestmanTestCaseManager {
 		}
 	}
 
-	@Path("{index}/{type}/{name}")
+	@Path("{projectName}/{type}")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public javax.ws.rs.core.Response updateAny(@PathParam("index") String index, @PathParam("type") String type,
-			@PathParam("name") String name, String body) throws ClientProtocolException, IOException {
+	public javax.ws.rs.core.Response save(@PathParam("projectName") String projectName, @PathParam("type") String type,@QueryParam("userName") String userName, String body) throws ClientProtocolException, IOException {
+		JsonObject jsonObject = (JsonObject) new JsonParser().parse(body);
+		jsonObject.addProperty("type",type);
+		jsonObject.addProperty("userName", userName);
+
+		return  saveData(projectName,type,jsonObject.get("id").getAsString(),userName,jsonObject);
+	}
+
+	@Path("{projectName}/{type}/{id}")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public javax.ws.rs.core.Response saveById(@PathParam("projectName") String projectName, @PathParam("type") String type,
+			@PathParam("id") String id,@QueryParam("userName") String userName, String body) throws ClientProtocolException, IOException {
 
 		JsonObject jsonObject = (JsonObject) new JsonParser().parse(body);
+		jsonObject.addProperty("type",type);
+		jsonObject.addProperty("userName", userName);
 
-		String resourceURL = elasticSearchServer + index + "/" + type + "/" + name;
+
+		return  saveData(projectName,type,id,userName,jsonObject);
+
+
+	}
+
+	private javax.ws.rs.core.Response saveData(@PathParam("projectName") String projectName, @PathParam("type") String type,
+											   @PathParam("id") String id,@QueryParam("userName") String userName,JsonObject jsonObject)  throws ClientProtocolException, IOException{
+		String resourceURL = elasticSearchServer + (projectName + "_" + type).toLowerCase() + "/_doc/" + id;
 
 		HttpResponse resp = Request.Post(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"))
 				.body(new StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON)).execute().returnResponse();
@@ -76,38 +92,19 @@ public class RestmanTestCaseManager {
 			return javax.ws.rs.core.Response.ok().build();
 		else
 			return javax.ws.rs.core.Response.serverError().build();
-
 	}
 
-	@Path("{projectName}/hosts/{name}")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public javax.ws.rs.core.Response update(@PathParam("projectName") String projectName,
-			@PathParam("name") String name, String body) throws ClientProtocolException, IOException {
 
-		JsonObject jsonObject = (JsonObject) new JsonParser().parse(body);
-
-		String resourceURL = elasticSearchServer + projectName + "/hosts/" + name;
-
-		HttpResponse resp = Request.Post(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"))
-				.body(new StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON)).execute().returnResponse();
-
-		if (resp.getStatusLine().getStatusCode() == 200 || resp.getStatusLine().getStatusCode() == 201)
-			return javax.ws.rs.core.Response.ok().build();
-		else
-			return javax.ws.rs.core.Response.serverError().build();
-
-	}
-
-	@Path("{projectName}/{domain}")
+	@Path("{projectName}/{type}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String genericDomainRead(@PathParam("projectName") String projectName, @PathParam("domain") String domain,
-			@QueryParam("executionId") String executionId) throws ClientProtocolException, IOException {
+	public String genericDomainRead(@PathParam("projectName") String projectName, @PathParam("type") String type,
+			@QueryParam("executionId") String executionId,@QueryParam("limit") int limit,@QueryParam("offset") int offset) throws ClientProtocolException, IOException {
 
-		String resourceURL = elasticSearchServer + projectName + "/" + domain + "/_search?size=5000";
+		if(limit==0) limit=5000;
+
+		String resourceURL = elasticSearchServer + (projectName + "_" + type).toLowerCase()   + "/_search?size="+limit;
 
 		if (executionId != null && !executionId.isEmpty()) {
 
@@ -129,60 +126,102 @@ public class RestmanTestCaseManager {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String testSummary(@PathParam("projectName") String projectName, @PathParam("type") String type,
-			@PathParam("id") String id) throws ClientProtocolException, IOException {
+	public String genericDomainReadById(@PathParam("projectName") String projectName, @PathParam("type") String type,
+									@PathParam("id") String id) throws ClientProtocolException, IOException {
 
-		String resourceURL = elasticSearchServer + projectName + "/" + type + "/" + id;
 
-		if ("_search".equalsIgnoreCase(id)) {
+		String resourceURL = elasticSearchServer + (projectName + "_" + type).toLowerCase()   + "/_doc/"+id;
 
-			resourceURL += "?size=5000";
-		}
-
-		System.out.println(resourceURL);
 
 		Request request = Request.Get(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"));
+
 		try {
 			return request.execute().returnContent().asString();
+
 		} catch (Exception e) {
 
 			return "{}";
 		}
 	}
 
-	@Path("{projectName}/testCase")
-	@POST
+	@Path("executions/execution/{id}")
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public javax.ws.rs.core.Response test(@PathParam("projectName") String projectName,
-			@QueryParam("userName") String userName, String body)
-			throws URISyntaxException, ClientProtocolException, IOException {
-		JsonObject jsonObject = (JsonObject) new JsonParser().parse(body);
+	public String getExecution(@PathParam("id") String id) throws ClientProtocolException, IOException {
 
-//		jsonObject.get("steps").getAsJsonArray().forEach(ja->{
-//			String input = ja.getAsJsonObject().get("input").toString();
-//			ja.getAsJsonObject().addProperty("input", input);
-//			String assertions = ja.getAsJsonObject().get("assertions").toString();
-//			ja.getAsJsonObject().addProperty("assertions", assertions);
-//		});
-		jsonObject.addProperty("userName", userName);
 
-		String resourceURL = elasticSearchServer + projectName + "/testCase/" + jsonObject.get("id").getAsString();
+		String resourceURL = elasticSearchServer +"executions/execution/"+id;
 
-		Request request = Request.Post(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"))
-				.body(new StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON));
 
-		int statusCode = request.execute().returnResponse().getStatusLine().getStatusCode();
-		System.out.println("Resource URL :" + resourceURL);
+		Request request = Request.Get(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"));
 
-		if (statusCode == 200 || statusCode == 201) {
+		try {
+			return request.execute().returnContent().asString();
 
-			return javax.ws.rs.core.Response.created(new URI(resourceURL)).build();
-		} else {
+		} catch (Exception e) {
 
-			return javax.ws.rs.core.Response.serverError().build();
+			return "{}";
 		}
 	}
+
+	@Path("{projectName}/{type}/{id}")
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String delete(@PathParam("projectName") String projectName, @PathParam("type") String type,
+										@PathParam("id") String id) throws ClientProtocolException, IOException {
+
+
+		String resourceURL = elasticSearchServer + (projectName + "_" + type).toLowerCase()   + "/_doc/"+id;
+
+
+		Request request = Request.Delete(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"));
+
+		try {
+			return request.execute().returnContent().asString();
+
+		} catch (Exception e) {
+
+			return "{}";
+		}
+	}
+
+
+
+//	@Path("{projectName}/testCase")
+//	@POST
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public javax.ws.rs.core.Response test(@PathParam("projectName") String projectName,
+//			@QueryParam("userName") String userName, String body)
+//			throws URISyntaxException, ClientProtocolException, IOException {
+//		JsonObject jsonObject = (JsonObject) new JsonParser().parse(body);
+//
+////		jsonObject.get("steps").getAsJsonArray().forEach(ja->{
+////			String input = ja.getAsJsonObject().get("input").toString();
+////			ja.getAsJsonObject().addProperty("input", input);
+////			String assertions = ja.getAsJsonObject().get("assertions").toString();
+////			ja.getAsJsonObject().addProperty("assertions", assertions);
+////		});
+//		jsonObject.addProperty("userName", userName);
+//
+//		String resourceURL = elasticSearchServer + projectName + "/testCase/" + jsonObject.get("id").getAsString();
+//
+//		Request request = Request.Post(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"))
+//				.body(new StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON));
+//
+//		int statusCode = request.execute().returnResponse().getStatusLine().getStatusCode();
+//		System.out.println("Resource URL :" + resourceURL);
+//
+//		if (statusCode == 200 || statusCode == 201) {
+//
+//			return javax.ws.rs.core.Response.created(new URI(resourceURL)).build();
+//		} else {
+//
+//			return javax.ws.rs.core.Response.serverError().build();
+//		}
+//	}
 
 	// http://localhost:9200/mytest/_search?q=steps.method:GET%20userName:dhaneesh%20tags:performance&pretty&default_operator=AND
 	@POST
@@ -193,13 +232,9 @@ public class RestmanTestCaseManager {
 			@QueryParam("tags") String tags, @QueryParam("executionId") String executionId,
 			@QueryParam("onlyMyTests") boolean onlyMyTests, @Context UriInfo ui) {
 		MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
-		Map<String, String> qp = new HashMap<>();
-		for (String key : queryParams.keySet()) {
 
-			qp.put(key, queryParams.getFirst(key));
-		}
 		String execId = UUID.randomUUID().toString();
-		new Thread(() -> executeInternal(userName, projectName, tags, execId, onlyMyTests, qp)).start();
+		new Thread(() -> executeInternal(userName, projectName, tags, execId, onlyMyTests)).start();
 		JSONObject jo = new JSONObject();
 		jo.put("status", "SUCCESS");
 		jo.put("executionId", execId);
@@ -210,8 +245,10 @@ public class RestmanTestCaseManager {
 
 	public String executeInternal(@QueryParam("userName") String userName,
 			@QueryParam("projectName") String projectName, @QueryParam("tags") String tags,
-			@QueryParam("executionId") String executionId, @QueryParam("onlyMyTests") boolean onlyMyTests,
-			Map<String, String> qp) {
+			@QueryParam("executionId") String executionId, @QueryParam("onlyMyTests") boolean onlyMyTests
+			) {
+
+
 
 		String q = "";
 		String app = "";
@@ -234,12 +271,13 @@ public class RestmanTestCaseManager {
 		if (!q.isEmpty())
 			q = "?q=" + URLEncoder.encode(q) + "&default_operator=AND";
 
-		String resourceURL = elasticSearchServer + projectName + "/testCase/_search" + q;
+		String resourceURL = elasticSearchServer + (projectName + "_testCase").toLowerCase()+"/_search" + q;
 
 		System.out.println("resourceURL :" + resourceURL);
 
 		Request request = Request.Get(resourceURL).addHeader(new BasicHeader("Content-Type", "application/json"));
 
+		Map<String, String> qp =getVariables(projectName);
 		String content;
 		final String execId;
 
@@ -369,16 +407,27 @@ public class RestmanTestCaseManager {
 		return "FAILED EXECUTION";
 	}
 
-	public static void main1(String[] args) {
-		RestmanTestCaseManager hr = new RestmanTestCaseManager();
 
-		Map<String, String> contextMap = new HashMap<>();
+	private Map<String, String>  getVariables(String projectName){
+		String resultURL = elasticSearchServer + projectName + "_variables/_search";
+		Request request = Request.Get(resultURL).addHeader(new BasicHeader("Content-Type", "application/json"));
+		Map<String, String> qp = new HashMap<>();
 
-		contextMap.put("TARGET_HOST", "cms-dev.in.here.com");
-		String executionId = UUID.randomUUID().toString();
+		try {
+			String data= request.execute().returnContent().asString();
+			JsonObject jsonNew = new JsonParser().parse(data).getAsJsonObject();
 
-		System.out.println("Current ExecutionId : " + executionId);
+			jsonNew.getAsJsonObject("hits").getAsJsonArray("hits").forEach(f->{
+				JsonObject jo=f.getAsJsonObject().getAsJsonObject("_source");
+				qp.put(jo.get("name").getAsString(),jo.get("value").getAsString());
 
-		hr.executeInternal("", "pointbinding", "performance,read", executionId, false, contextMap);
+			});
+
+		} catch (Exception e) {
+
+		}
+		return qp;
 	}
+
+
 }

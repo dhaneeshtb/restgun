@@ -284,7 +284,7 @@ public class TestCaseExecutor
 		return assertionResponses;
 	}
 
-	public String replaceVariables(String input,Map<String, String> contextMap)
+	public String replaceVariablesOld(String input,Map<String, String> contextMap)
 	{
 		if(contextMap.isEmpty())
 		{
@@ -313,5 +313,20 @@ public class TestCaseExecutor
 			return input;
 		}
 		return writer.toString();
+	}
+
+
+	public String replaceVariables(String input,Map<String, String> contextMap)
+	{
+		if(contextMap.isEmpty() || input.isEmpty())
+		{
+			return input;
+		}
+		StringWriter writer = new StringWriter();
+		for(Map.Entry<String, String> entry : contextMap.entrySet())
+		{
+			input = input.replaceAll("\\{\\{"+entry.getKey()+"\\}\\}",entry.getValue());
+		}
+		return input;
 	}
 }

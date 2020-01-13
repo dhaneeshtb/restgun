@@ -1,47 +1,47 @@
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-<title>RESTMan</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+	<title>RESTMan</title>
 
-<!-- CSS  -->
+	<!-- CSS  -->
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link href="assets/css/materialize.css" type="text/css" rel="stylesheet"
-	media="screen,projection" />
-<link href="assets/css/materialstyle.css" type="text/css"
-	rel="stylesheet" media="screen,projection" />
-<!--
-<link rel="stylesheet" href="leaflet.css" /> -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
-	rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+		  rel="stylesheet">
+	<link href="assets/css/materialize.css" type="text/css" rel="stylesheet"
+		  media="screen,projection" />
+	<link href="assets/css/materialstyle.css" type="text/css"
+		  rel="stylesheet" media="screen,projection" />
+	<!--
+    <link rel="stylesheet" href="leaflet.css" /> -->
+	<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"
+			rel="stylesheet" />
 
-<link
-	href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
-	rel="stylesheet">
+	<link
+			href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+			rel="stylesheet">
 
 
 	<link
 			href="assets/codemirror.css"
 			rel="stylesheet">
 
-<!-- 
-<link rel="stylesheet" type="text/css" href="/css/result-light.css"> -->
+	<!--
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css"> -->
 
 
 
 
 
 
-<link rel="stylesheet" type="text/css"
-	href="http://static.jstree.com/3.0.0-beta3/assets/dist/themes/default/style.min.css">
+	<link rel="stylesheet" type="text/css"
+		  href="http://static.jstree.com/3.0.0-beta3/assets/dist/themes/default/style.min.css">
 
 
 
-<style>
+	<style>
 .brand-logo {
 	background-color: #fff;
 	background-image: url('assets/images/download.svg');
@@ -55,9 +55,9 @@
 	z-index: 4;
 }
 </style>
-<script src="assets/js/leaflet.js"></script>
-<script src="assets/js/rotate.js"></script>
-<style>
+	<script src="assets/js/leaflet.js"></script>
+	<script src="assets/js/rotate.js"></script>
+	<style>
 .text-labels {
 	color: black;
 	font-size: 1em;
@@ -185,146 +185,150 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 </style>
 </head>
 <body>
-	<nav>
-		<div class="nav-wrapper" style="background: #0f1621">
-			<a href="#!" class="brand-logo"><i class="material-icons">cloud</i>
+<nav>
+	<div class="nav-wrapper" style="background: #0f1621">
+		<a href="#!" class="brand-logo"><i class="material-icons">cloud</i>
 
 
-			</a>
+		</a>
 
-			<ul class="right hide-on-med-and-down">
+		<ul class="right hide-on-med-and-down">
 
-				<li><a class="dropdown-button" href=""
-					data-activates="dropdown2" style="width: 200px"> <span
-						id="projectName">Select Project</span><i
-						class="material-icons right">arrow_drop_down</i></a></li>
-			</ul>
-			<ul class="right hide-on-med-and-down">
+			<li><a class="dropdown-button" href=""
+				   data-activates="dropdown2" style="width: 200px"> <span
+					id="projectName">Select Project</span><i
+					class="material-icons right">arrow_drop_down</i></a></li>
+		</ul>
+		<ul class="right hide-on-med-and-down">
 			<li><a class="modal-trigger" href="#openSettingsModal"><i
-						id="openSettings"
-						style="width: 56px; height: 56px; line-height: 56px; margin: 5px; padding: 0px"
-						class="btn-floating waves-effect waves-light red material-icons center">settings</i>
-				</a></li>
-				<li><a class="modal-trigger" href="#openProjectModal"><i
-						id="addProject"
-						style="width: 56px; height: 56px; line-height: 56px; margin: 5px; padding: 0px"
-						class="btn-floating waves-effect waves-light green material-icons center">add</i>
-				</a></li>
+					id="openSettings"
+					style="width: 56px; height: 56px; line-height: 56px; margin: 5px; padding: 0px"
+					class="btn-floating waves-effect waves-light red material-icons center">settings</i>
+			</a></li>
+			<li><a class="modal-trigger" href="#openProjectModal"><i
+					id="addProject"
+					style="width: 56px; height: 56px; line-height: 56px; margin: 5px; padding: 0px"
+					class="btn-floating waves-effect waves-light green material-icons center">add</i>
+			</a></li>
 
+		</ul>
+	</div>
+</nav>
+
+<ul id="dropdown2" class="dropdown-content">
+	<li><a href="#">myproject</a></li>
+	<li class="divider"></li>
+</ul>
+
+
+<ul id="slide-out" class="side-nav fixed">
+	<li><div class="userView">
+		<div class="background" style="background: #0f1621"></div>
+		<!-- <a><span
+            style="float: right; padding: 4px; margin: 0px; background: white; line-height: 24px; border-radius: 5px; cursor: pointer"
+            onclick="logOff();">Logoff <i class="fa fa-sign-out"
+                aria-hidden="true"></i></span></a> -->
+		<a href="#!user"><img class="circle"
+							  src="assets/images/user.png"></a> <a href="#!name"><span
+			class="white-text name" id="userDisplayName"></span></a> <a
+			href="#!email"><span class="white-text email" id="userEmail"></span>
+	</a>
+
+	</div></li>
+	<!-- <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+<li><a href="#!">Second Link</a></li>
+<li><div class="divider"></div></li>
+<li><a class="subheader">Subheader</a></li>
+<li><a class="waves-effect" href="#!">Third Link With Waves</a></li> -->
+
+	<li class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s6"><a class="active" href="#test1">Test
+					Cases</a></li>
+				<li class="tab col s6"><a href="#test2">Variables</a></li>
 			</ul>
 		</div>
-	</nav>
+		<div id="test1" class="col s12">
 
-	<ul id="dropdown2" class="dropdown-content">
-		<li><a href="#">myproject</a></li>
-		<li class="divider"></li>
-	</ul>
-
-
-	<ul id="slide-out" class="side-nav fixed">
-		<li><div class="userView">
-				<div class="background" style="background: #0f1621"></div>
-				<!-- <a><span
-					style="float: right; padding: 4px; margin: 0px; background: white; line-height: 24px; border-radius: 5px; cursor: pointer"
-					onclick="logOff();">Logoff <i class="fa fa-sign-out"
-						aria-hidden="true"></i></span></a> -->
-				<a href="#!user"><img class="circle"
-					src="assets/images/user.png"></a> <a href="#!name"><span
-					class="white-text name" id="userDisplayName"></span></a> <a
-					href="#!email"><span class="white-text email" id="userEmail"></span>
-				</a>
-
-			</div></li>
-		<!-- <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li> -->
-
-		<li class="row">
-			<div class="col s12">
-				<ul class="tabs">
-					<li class="tab col s6"><a class="active" href="#test1">Test
-							Cases</a></li>
-					<li class="tab col s6"><a href="#test2">Hosts</a></li>
-				</ul>
+			<div style="padding: 20px;">
+				<i class="material-icons" style="position: absolute;">search</i> <input
+					class="search-input form-control" style="padding-left: 40px;">
 			</div>
-			<div id="test1" class="col s12">
 
-				<div style="padding: 20px;">
-					<i class="material-icons" style="position: absolute;">search</i> <input
-						class="search-input form-control" style="padding-left: 40px;">
+			<div id="jstree"></div>
+		</div>
+		<div id="test2" class="col s12">
+
+
+			<div>
+
+
+
+				<table id="hostTable">
+					<thead>
+					<tr>
+						<th data-field="name">Name</th>
+						<th data-field="name">Value</th>
+					</tr>
+					</thead>
+
+					<tbody>
+
+					<!-- <tr>
+                                            <td>Jonathan</td>
+                                            <td>Lollipop</td>
+                                        </tr> -->
+					</tbody>
+				</table>
+
+
+			</div>
+
+			<div class="row card" style="margin-top: 5px;">
+
+				<!--<div class="input-field col s12">-->
+				<!--<input id="email" type="email" class="validate">-->
+				<!--<label for="email">Email</label>-->
+				<!--</div>-->
+				<div class="col s1"
+					 style="padding: 0px; float: right; margin-right: 20px;">
+					<i id="addHost"
+					   class="btn-floating waves-effect waves-light green material-icons center">add</i>
+				</div>
+				<div class="input-field col s12">
+					<!--<div class="input-field">-->
+					<input id="nameInput" style="font-size: 12px" type="text"
+						   class="validate" value=> <label for="nameInput">Name</label>
+					<!--</div>-->
+				</div>
+				<div class="input-field col s12">
+					<!--<div class="input-field">-->
+					<input id="hostInput" style="font-size: 12px" type="text"
+						   class="validate" value=> <label for="hostInput">Host
+					Address</label>
+					<!--</div>-->
 				</div>
 
-				<div id="jstree"></div>
-			</div>
-			<div id="test2" class="col s12">
-
-
-				<div>
-
-					
-
-					<table id="hostTable">
-						<thead>
-							<tr>
-								<th data-field="name">Name</th>
-								<th data-field="name">Host</th>
-							</tr>
-						</thead>
-
-						<tbody>
-
-							<!-- <tr>
-													<td>Jonathan</td>
-													<td>Lollipop</td>
-												</tr> -->
-						</tbody>
-					</table>
-
-
-				</div>
-				
-				<div class="row card" style="margin-top: 5px;">
-
-						<div class="col s1"
-							style="padding: 0px; float: right; margin-right: 20px;">
-							<i id="addHost"
-								class="btn-floating waves-effect waves-light green material-icons center">add</i>
-						</div>
-						<div class="col s12">
-							<div class="input-field">
-								<input id="nameInput" style="font-size: 12px" type="text"
-									class="validate" value=> <label for="nameInput">Name</label>
-							</div>
-						</div>
-						<div class="col s12">
-							<div class="input-field">
-								<input id="hostInput" style="font-size: 12px" type="text"
-									class="validate" value=> <label for="hostInput">Host
-									Address</label>
-							</div>
-						</div>
-
-					</div>
-
-
-
-
-
 			</div>
 
-		</li>
 
-		<li></li>
-	</ul>
-	<a href="#" data-activates="slide-out" class="button-collapse"><i
+
+
+
+		</div>
+
+	</li>
+
+	<li></li>
+</ul>
+<a href="#" data-activates="slide-out" class="button-collapse"><i
 		class="material-icons">menu</i></a>
 
 
 
 
-	<main>
+<main>
 	<div class="container">
 
 		<div class="row">
@@ -335,7 +339,7 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 						<!-- Dropdown Trigger -->
 						<div class="row" style="padding-top: 20px">
 							<a id="request" style="" class='dropdown-button btn' href='#'
-								data-activates='dropdown1'>GET</a>
+							   data-activates='dropdown1'>GET</a>
 
 							<!-- Dropdown Structure -->
 							<ul id='dropdown1' class='dropdown-content'>
@@ -352,8 +356,8 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 					<div class="col s9">
 						<div class="input-field">
 							<input id="url" style="font-size: 12px" type="text"
-								class="validate"
-								value="https://nominatim.openstreetmap.org/reverse?format=json&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1">
+								   class="validate"
+								   value="https://nominatim.openstreetmap.org/reverse?format=json&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1">
 							<label for="url">URL</label>
 						</div>
 					</div>
@@ -361,7 +365,7 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 					<div class="col s1">
 						<div class="row" style="padding-top: 20px">
 							<a class="btn-floating btn-large waves-effect waves-light green"
-								id="send"><i class="material-icons">send</i></a>
+							   id="send"><i class="material-icons">send</i></a>
 
 						</div>
 					</div>
@@ -375,7 +379,7 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 								<span class="flow-text">Request</span>
 							</div>
 							<div class="col grid-example s8 m8 8 lightblue-1"
-								style="background: #0f1621; color: white">
+								 style="background: #0f1621; color: white">
 								<span class="flow-text">Response</span> <a
 									class="modal-trigger waves-effect waves-light btn right"
 									href="#modal1" style="margin: 5px;"><i
@@ -389,7 +393,7 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 								<div class="col s12" style="padding: 0px">
 									<ul class="tabs">
 										<li class="tab col s6"><a class="active"
-											href="#requestScreen">Body</a></li>
+																  href="#requestScreen">Body</a></li>
 										<li class="tab col s6"><a href="#headerScreen">Headers</a></li>
 									</ul>
 								</div>
@@ -397,30 +401,30 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 
 									<div class="card" style="margin: 0px">
 										<textarea id="requestBody"
-											style="height: 500px; overflow-y: scroll; background: #0f1621; color: yellow;"></textarea>
+												  style="height: 500px; overflow-y: scroll; background: #0f1621; color: yellow;"></textarea>
 									</div>
 								</div>
 								<div id="headerScreen" class="col s12" style="padding: 0px">
 
 									<div class="card"
-										style="width: 100%; right: 0px; height: 500px; box-shadow: none; margin: 0px">
+										 style="width: 100%; right: 0px; height: 500px; box-shadow: none; margin: 0px">
 
 
 										<table id="headers">
 											<thead>
-												<tr>
+											<tr>
 
-													<th data-field="name">HeaderName</th>
-													<th data-field="price">Value</th>
-												</tr>
+												<th data-field="name">HeaderName</th>
+												<th data-field="price">Value</th>
+											</tr>
 											</thead>
 
 											<tbody>
-												<tr>
-													<td>Content-Type</td>
-													<td>application/json</td>
-													<td onclick="$(this).parent().remove();"><i class="btn-floating waves-effect waves-light material-icons center">delete</i></td>
-												</tr>
+											<tr>
+												<td>Content-Type</td>
+												<td>application/json</td>
+												<td onclick="$(this).parent().remove();"><i class="btn-floating waves-effect waves-light material-icons center">delete</i></td>
+											</tr>
 											</tbody>
 										</table>
 										<hr>
@@ -434,7 +438,7 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 												</div>
 												<div class="col s2" style="padding: 0px">
 													<i id="addHeader"
-														class="btn-floating waves-effect waves-light green material-icons center">add</i>
+													   class="btn-floating waves-effect waves-light green material-icons center">add</i>
 												</div>
 											</div>
 
@@ -450,18 +454,18 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 
 								<div class="card" style="margin: 0px" id="respCard">
 									<textarea id="responseBody"
-										style="height: 478px; overflow-y: scroll; background: #0f1621; color: #fff;"></textarea>
+											  style="height: 478px; overflow-y: scroll; background: #0f1621; color: #fff;"></textarea>
 
 									<div class="card-content" style="height: 87px; padding: 0px">
 										<span class="card-title activator grey-text text-darken-4">
 											<!-- <i class="material-icons right"></i> --> <i
-											id="openAssert"
-											class="btn-floating waves-effect waves-light green material-icons center right">more_vert</i>
+												id="openAssert"
+												class="btn-floating waves-effect waves-light green material-icons center right">more_vert</i>
 										</span>
 										<table>
 											<tr>
 												<td id="responseCode" style="padding: 0px"><span
-													id="responseIcon"></span>Response Code:<span>---------</span></td>
+														id="responseIcon"></span>Response Code:<span>---------</span></td>
 												<td id="timeTaken">Time Taken:<span>------</span></td>
 											</tr>
 										</table>
@@ -469,7 +473,7 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 									</div>
 									<div class="card-reveal" style="width: 60%; right: 0px;">
 										<span class="card-title grey-text text-darken-4">Asserts<i
-											class="material-icons right">close</i>
+												class="material-icons right">close</i>
 										</span>
 										<div class="row">
 											<div class="col s11">
@@ -477,26 +481,26 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 											</div>
 											<div class="col s1" style="padding: 0px">
 												<i id="addAssertion"
-													class="btn-floating waves-effect waves-light green material-icons center">add</i>
+												   class="btn-floating waves-effect waves-light green material-icons center">add</i>
 											</div>
 										</div>
 										<p style="padding: 0px" id="queryOutput"></p>
 
 										<table id="queryTable">
 											<thead>
-												<tr>
+											<tr>
 
-													<th data-field="name">Assertion</th>
-													<th data-field="price">Result</th>
-												</tr>
+												<th data-field="name">Assertion</th>
+												<th data-field="price">Result</th>
+											</tr>
 											</thead>
 
 											<tbody>
 
-												<!-- <tr>
-													<td>Jonathan</td>
-													<td>Lollipop</td>
-												</tr> -->
+											<!-- <tr>
+                                                <td>Jonathan</td>
+                                                <td>Lollipop</td>
+                                            </tr> -->
 											</tbody>
 										</table>
 
@@ -529,193 +533,192 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 	</div>
 
 
-	</main>
+</main>
 
-	<div id="openProjectModal" class="modal" style="max-width: 500px;">
+<div id="openProjectModal" class="modal" style="max-width: 500px;">
 
-		<div class="modal-content">
-			
-			<div class="col grid-example s12 m12 12 teal modal_header">
-							<!-- <h2>Configure New Project</h2> -->
-							<span class="flow-text">Configure New Project</span>
-						</div>
-			
+	<div class="modal-content">
 
-			<div class="row">
-				<div class="testcase col s12" style="padding: 0px; height: 100%;">
-					<div class="row" style="height: 100%; margin: auto">
-						
+		<div class="col grid-example s12 m12 12 teal modal_header">
+			<!-- <h2>Configure New Project</h2> -->
+			<span class="flow-text">Configure New Project</span>
+		</div>
 
-						<form class="col s12 white" style="height: 100%" id="inform">
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="nprojectName" type="text" class="validate" required><label
-										for="nprojectName" >Project Name</label>
-								</div>
-								<div class="input-field col s12">
+
+		<div class="row">
+			<div class="testcase col s12" style="padding: 0px; height: 100%;">
+				<div class="row" style="height: 100%; margin: auto">
+
+
+					<form class="col s12 white" style="height: 100%" id="inform">
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="nprojectName" type="text" class="validate" required><label
+									for="nprojectName" >Project Name</label>
+							</div>
+							<div class="input-field col s12">
 									<textarea id="npdescription"
-										class="validate materialize-textarea" required></textarea>
-									<label for="npdescription">Project Description</label>
-								</div>
-							</div>
-
-						</form>
-						<div class="row">
-							<div class="input-field col s12">
-							
-								<a id="createProject" class="btn right" onclick="addProject();"
-									style="margin: 5px;"><i class="material-icons left">check</i>Done</a>
-
+											  class="validate materialize-textarea" required></textarea>
+								<label for="npdescription">Project Description</label>
 							</div>
 						</div>
 
+					</form>
+					<div class="row">
+						<div class="input-field col s12">
+
+							<a id="createProject" class="btn right" onclick="addProject();"
+							   style="margin: 5px;"><i class="material-icons left">check</i>Done</a>
+
+						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div id="openSettingsModal" class="modal" style="max-width: 500px;">
+</div>
 
-		<div class="modal-content">
-			
-			<div class="col grid-example s12 m12 12 teal modal_header">
-							<!-- <h2>Configure New Project</h2> -->
-							<span class="flow-text">Settings</span>
-						</div>
-			
+<div id="openSettingsModal" class="modal" style="max-width: 500px;">
 
-			<div class="row">
-				<div class="testcase col s12" style="padding: 0px; height: 100%;">
-					<div class="row" style="height: 100%; margin: auto">
-						
+	<div class="modal-content">
 
-						<form class="col s12 white" style="height: 100%" id="inform">
-						
-							<div class="row">
-							
-								
-								
-								 <div class="input-field col s12">
-									<input id="serverURL" type="text" class="validate" required value="default"><label
-										for="serverURL" >Server URL</label>
-								</div>
-								
-								
-							</div>
+		<div class="col grid-example s12 m12 12 teal modal_header">
+			<!-- <h2>Configure New Project</h2> -->
+			<span class="flow-text">Settings</span>
+		</div>
 
-						</form>
+
+		<div class="row">
+			<div class="testcase col s12" style="padding: 0px; height: 100%;">
+				<div class="row" style="height: 100%; margin: auto">
+
+
+					<form class="col s12 white" style="height: 100%" id="inform">
 
 						<div class="row">
+
+
+
 							<div class="input-field col s12">
-
-								<a id="save" class="btn right" onclick="setServer();"
-								   style="margin: 5px;"><i class="material-icons left">check</i>Done</a>
-
+								<input id="serverURL" type="text" class="validate" required value="default"><label
+									for="serverURL" >Server URL</label>
 							</div>
-						</div>
-						
 
+
+						</div>
+
+					</form>
+
+					<div class="row">
+						<div class="input-field col s12">
+
+							<a id="save" class="btn right" onclick="setServer();"
+							   style="margin: 5px;"><i class="material-icons left">check</i>Done</a>
+
+						</div>
 					</div>
+
+
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<div id="loginModal" class="modal" style="max-width: 500px;">
+<div id="loginModal" class="modal" style="max-width: 500px;">
 
-		<div class="modal-content">
+	<div class="modal-content">
 
-			<div class="row">
-				<div class="testcase col s12" style="padding: 0px; height: 100%;">
-					<div class="row" style="height: 100%; margin: auto">
-						<h2>Login</h2>
+		<div class="row">
+			<div class="testcase col s12" style="padding: 0px; height: 100%;">
+				<div class="row" style="height: 100%; margin: auto">
+					<h2>Login</h2>
 
-						<form class="col s12 white" style="height: 100%" id="inform">
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="userName" type="text" class="validate"><label
-										for="userName">UserName/Handle</label>
-								</div>
-								<div class="input-field col s12">
-									<input id="password" type="password" class="validate"><label
-										for="password">Password</label>
-								</div>
-							</div>
-
-						</form>
+					<form class="col s12 white" style="height: 100%" id="inform">
 						<div class="row">
-							<div class="input-field col s12" id="actionsL">
-								<a id="login_b" class="btn right" style="margin: 5px;"><i
+							<div class="input-field col s12">
+								<input id="userName" type="text" class="validate"><label
+									for="userName">UserName/Handle</label>
+							</div>
+							<div class="input-field col s12">
+								<input id="password" type="password" class="validate"><label
+									for="password">Password</label>
+							</div>
+						</div>
+
+					</form>
+					<div class="row">
+						<div class="input-field col s12" id="actionsL">
+							<a id="login_b" class="btn right" style="margin: 5px;"><i
 									class="material-icons left">send</i>Proceed</a>
 
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<!-- Modal Structure -->
-	<div id="executeModal" class="modal">
-		<a href="#!"
-			class=" modal-action modal-close waves-effect waves-green btn right">CLOSE</a>
+<!-- Modal Structure -->
+<div id="executeModal" class="modal">
+	<a href="#!"
+	   class=" modal-action modal-close waves-effect waves-green btn right">CLOSE</a>
 
-		<div class="modal-content">
+	<div class="modal-content">
 
-			<div class="row">
-				<div class="testcase col s12" style="padding: 0px">
+		<div class="row">
+			<div class="testcase col s12" style="padding: 0px">
 
-					<div class="row" style="height: 100%">
-						<form class="col s12 white" style="height: 100%" id="inform">
-							<div class="row">
-								<div class="input-field col s6">
-									<input id="pname" type="text" class="validate" disabled><label
-										for="testcaseId">ProjectName</label>
-								</div>
-								<div class="input-field col s6">
-									<input id="uname" type="text" class="validate" disabled><label
-										for="testcaseId">UserName</label>
-								</div>
-							</div>
-
-
-
-							<div class="row">
-								<div class="input-field col s12" id="execTagsc">
-
-									<div class="chips chips-initial" id="execTags"></div>
-								</div>
-							</div>
-
-
-							<div class="row">
-								<!-- 								<p>Choose target server only if you wanted to execte the test case on any other server than the original request</p>
- -->
-								<div class="input-field col s12">
-									<select multiple id="sselect">
-
-									</select> <label>Choose a target Server (Optional)</label>
-								</div>
-							</div>
-
-
-
-						</form>
+				<div class="row" style="height: 100%">
+					<form class="col s12 white" style="height: 100%" id="inform">
 						<div class="row">
-							<div class="input-field col s12" id="actions">
-
-								<button class="button" id="executeTest">Execute</button>
+							<div class="input-field col s6">
+								<input id="pname" type="text" class="validate" disabled><label
+									for="testcaseId">ProjectName</label>
 							</div>
+							<div class="input-field col s6">
+								<input id="uname" type="text" class="validate" disabled><label
+									for="testcaseId">UserName</label>
+							</div>
+						</div>
 
-							<div class="row">
-								<div class="input-field col s12">
 
-									<a href="" id="execURL" target="_blank"></a>
-								</div>
+
+						<div class="row">
+							<div class="input-field col s12" id="execTagsc">
+
+								<div class="chips chips-initial" id="execTags"></div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<!-- 								<p>Choose target server only if you wanted to execte the test case on any other server than the original request</p>
+-->
+							<div class="input-field col s12">
+								<select multiple id="sselect">
+
+								</select> <label>Choose a target Server (Optional)</label>
+							</div>
+						</div>
+
+
+
+					</form>
+					<div class="row">
+						<div class="input-field col s12" id="actions">
+
+							<button class="button" id="executeTest">Execute</button>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s12">
+
+								<a href="" id="execURL" target="_blank"></a>
 							</div>
 						</div>
 					</div>
@@ -723,183 +726,184 @@ box-shadow: 0 5px 20px 0 rgba(47, 41, 41, 0.2), 0 13px 24px -11px rgba(189, 79, 
 			</div>
 		</div>
 	</div>
+</div>
 
 
-	<!-- Modal Structure -->
-	<div id="modal1" class="modal"
-		style="width: 100%; max-height: 100%; height: 100%;overflow:none">
-		<a href="#!"
-			class=" modal-action modal-close waves-effect waves-green btn right" style="z-index:101" onclick="initProjectTree();">CLOSE</a>
+<!-- Modal Structure -->
+<div id="modal1" class="modal"
+	 style="width: 100%; max-height: 100%; height: 100%;overflow:none">
+	<a href="#!"
+	   class=" modal-action modal-close waves-effect waves-green btn right" style="z-index:101" onclick="initProjectTree();">CLOSE</a>
 
-		<div class="modal-content" style="height: 100%; padding: 0px">
+	<div class="modal-content" style="height: 100%; padding: 0px">
 
-			<nav class=" center" style="background: #124191;position:fixed;z-index:100">
-				<a class="btn-floating btn-large waves-effect waves-light orange"
-					id="saveTest"><i class="material-icons">save</i></a> <a
-					class="btn-floating btn-large waves-effect waves-light green"
-					id="execute"><i class="material-icons">send</i></a>
-			</nav>
+		<nav class=" center" style="background: #124191;position:fixed;z-index:100">
+			<a class="btn-floating btn-large waves-effect waves-light orange"
+			   id="saveTest"><i class="material-icons">save</i></a> <a
+				class="btn-floating btn-large waves-effect waves-light green"
+				id="execute"><i class="material-icons">send</i></a>
+		</nav>
 
-			<div class="row">
-				<div class="testcase col s8" style="padding: 0px">
+		<div class="row">
+			<div class="testcase col s8" style="padding: 0px">
 
-					<div class="row black" style="height: 100%">
-						<form class="col s4 white" style="height: 100%" id="inform">
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="projectNameText" type="text" class="validate"
-										disabled>
-								</div>
+				<div class="row black" style="height: 100%">
+					<form class="col s4 white" style="height: 100%" id="inform">
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="projectNameText" type="text" class="validate"
+									   disabled>
 							</div>
+						</div>
 
 
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="testcaseId" type="text" class="validate"> <label
-										for="testcaseId">TestCase Id</label>
-								</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="testcaseId" type="text" class="validate"> <label
+									for="testcaseId">TestCase Id</label>
 							</div>
+						</div>
 
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="testcaseName" type="text" class="validate">
-									<label for="testcaseName">TestCase Name</label>
-								</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="testcaseName" type="text" class="validate">
+								<label for="testcaseName">TestCase Name</label>
 							</div>
+						</div>
 
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="testcaseGroup" type="text" class="validate"
-										value="General"> <label for="testcaseGroup">TestCase
-										Group (Eg: road/split)</label>
-								</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="testcaseGroup" type="text" class="validate"
+									   value="General"> <label for="testcaseGroup">TestCase
+								Group (Eg: road/split)</label>
 							</div>
+						</div>
 
-							<div class="row">
-								<div class="input-field col s12">
-									<textarea id="description" class="materialize-textarea"></textarea>
-									<label for="description">Description</label>
-								</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<textarea id="description" class="materialize-textarea"></textarea>
+								<label for="description">Description</label>
 							</div>
+						</div>
 
-							<div class="row">
-								<div class="input-field col s12" id="tagc">
-									<div class="chips chips-initial" id="tags"></div>
-								</div>
+						<div class="row">
+							<div class="input-field col s12" id="tagc">
+								<div class="chips chips-initial" id="tags"></div>
 							</div>
+						</div>
 
 
 
-						</form>
+					</form>
 
-						<div class="col s8" style="padding: 0px">
+					<div class="col s8" style="padding: 0px">
 
-							<div class="card" style="margin: 0px">
+						<div class="card" style="margin: 0px">
 								<textarea id="testcaseJson"
-									style="height: 100%; overflow-y: scroll; background: #010b1e; color: white;">
+										  style="height: 100%; overflow-y: scroll; background: #010b1e; color: white;">
 								</textarea>
-							</div>
-
 						</div>
 
 					</div>
 
 				</div>
 
-				<div class="col s4" style="padding: 0px">
+			</div>
 
-					<div class="card" style="margin: 0px">
+			<div class="col s4" style="padding: 0px">
+
+				<div class="card" style="margin: 0px">
 						<textarea id="console"
-							style="height: 100%; overflow-y: scroll; background: #010b1e; color: white;">
+								  style="height: 100%; overflow-y: scroll; background: #010b1e; color: white;">
 						</textarea>
-					</div>
-
 				</div>
+
 			</div>
-
-			<p id="testCaseCloudURL" style="display: none">/herest/</p>
-
 		</div>
+
+		<p id="testCaseCloudURL" style="display: none">/herest/</p>
 
 	</div>
 
+</div>
 
 
-	<div class="preloader-wrapper big active" id="progress"
-		style="position: absolute; top: 50%; left: 50%; display: none">
-		<div class="spinner-layer spinner-blue">
-			<div class="circle-clipper left">
-				<div class="circle"></div>
-			</div>
-			<div class="gap-patch">
-				<div class="circle"></div>
-			</div>
-			<div class="circle-clipper right">
-				<div class="circle"></div>
-			</div>
+
+<div class="preloader-wrapper big active" id="progress"
+	 style="position: absolute; top: 50%; left: 50%; display: none">
+	<div class="spinner-layer spinner-blue">
+		<div class="circle-clipper left">
+			<div class="circle"></div>
 		</div>
-
-		<div class="spinner-layer spinner-red">
-			<div class="circle-clipper left">
-				<div class="circle"></div>
-			</div>
-			<div class="gap-patch">
-				<div class="circle"></div>
-			</div>
-			<div class="circle-clipper right">
-				<div class="circle"></div>
-			</div>
+		<div class="gap-patch">
+			<div class="circle"></div>
 		</div>
-
-		<div class="spinner-layer spinner-yellow">
-			<div class="circle-clipper left">
-				<div class="circle"></div>
-			</div>
-			<div class="gap-patch">
-				<div class="circle"></div>
-			</div>
-			<div class="circle-clipper right">
-				<div class="circle"></div>
-			</div>
-		</div>
-
-		<div class="spinner-layer spinner-green">
-			<div class="circle-clipper left">
-				<div class="circle"></div>
-			</div>
-			<div class="gap-patch">
-				<div class="circle"></div>
-			</div>
-			<div class="circle-clipper right">
-				<div class="circle"></div>
-			</div>
+		<div class="circle-clipper right">
+			<div class="circle"></div>
 		</div>
 	</div>
-	<!-- <script
-		src="http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script> -->
 
-	<script
+	<div class="spinner-layer spinner-red">
+		<div class="circle-clipper left">
+			<div class="circle"></div>
+		</div>
+		<div class="gap-patch">
+			<div class="circle"></div>
+		</div>
+		<div class="circle-clipper right">
+			<div class="circle"></div>
+		</div>
+	</div>
+
+	<div class="spinner-layer spinner-yellow">
+		<div class="circle-clipper left">
+			<div class="circle"></div>
+		</div>
+		<div class="gap-patch">
+			<div class="circle"></div>
+		</div>
+		<div class="circle-clipper right">
+			<div class="circle"></div>
+		</div>
+	</div>
+
+	<div class="spinner-layer spinner-green">
+		<div class="circle-clipper left">
+			<div class="circle"></div>
+		</div>
+		<div class="gap-patch">
+			<div class="circle"></div>
+		</div>
+		<div class="circle-clipper right">
+			<div class="circle"></div>
+		</div>
+	</div>
+</div>
+<!-- <script
+    src="http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script> -->
+
+<script
 		src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-	<script
+<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-	<script type="text/javascript" src="assets/js/materialize.min.js"></script>
+<script type="text/javascript" src="assets/js/materialize.min.js"></script>
 
-	<script type="text/javascript" src="assets/js/mustache.js"></script>
+<script type="text/javascript" src="assets/js/mustache.js"></script>
 
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="http://static.jstree.com/3.0.0-beta3/assets/dist/jstree.min.js"></script>
 
 
-	<script id="read_boundingbox" type="text/plain">
+<script id="read_boundingbox" type="text/plain">
 
-	</script>
+</script>
 
-	<script id="testCaseTemplateFooter" type="text/plain">	
-	
-	</script>
-	<script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-	<script type="text/javascript" src="assets/codemirror.js"></script>
-	<script type="text/javascript" src="assets/js/main.js"></script>
+<script id="testCaseTemplateFooter" type="text/plain">
+
+</script>
+<script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/javascript" src="assets/codemirror.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
 </body>
 </html>

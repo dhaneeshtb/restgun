@@ -25,7 +25,7 @@ public class App
 		context.setContextPath("/");
 		context.setResourceBase("/");
 		
-		int port =System.getProperty("server.port")!=null?Integer.parseInt(System.getProperty("server.port")):44444;
+		int port =System.getProperty("server.port")!=null?Integer.parseInt(System.getProperty("server.port")):55555;
 		System.setProperty("server.port",""+port);
 
 		Server jettyServer = new Server(port);
